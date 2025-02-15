@@ -231,7 +231,7 @@ Answer the user's question in a way that relates to the current Blackjack lesson
 
 # Streamlit UI configuration
 st.title("Blackjack AI Tutor")
-st.markdown("Learn Blackjack step-by-step. Each lesson's explanation is hardcoded, and even in Practice Mode you can ask additional questions.")
+st.markdown("Learn Blackjack step-by-step.")
 st.markdown(step_texts[st.session_state.step])
 
 
