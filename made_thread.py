@@ -27,35 +27,70 @@ if "dealer_score" not in st.session_state:
 
 # Hardcoded lesson texts for each step
 step_texts = {
-    0: """🎲 **Blackjack Basic Rules**
-Blackjack is a game where you try to beat the dealer by having a hand value closer to 21 without exceeding it.
-- **A (Ace)**: counts as 1 or 11
-- **2-10**: face value
-- **J, Q, K**: count as 10
+    0: """## Step 1: Blackjack Basic Rules
+**Objective:**  
+Beat the dealer by having a hand value closer to 21 without exceeding it.
+
+**Card Values:**  
+- **A (Ace):** Can count as 1 or 11 (choose whichever is more advantageous).  
+- **2-10:** Count as their face value.  
+- **J, Q, K:** Each counts as 10.
+
+*Example:*  
+If you have an Ace and a 7, your total can be either 8 or 18.
 """,
-    1: """💰 **Betting Methods**
-- Minimum bet: usually starts from $5 to $10
-- Place your bet before the dealer deals the cards
-- Additional betting options during the game: Double Down, Split, etc.
+    1: """## Step 2: Betting Methods
+**How to Place a Bet:**  
+- **Minimum Bet:** Typically starts from \$5 to \$10.  
+- **When to Bet:** Place your bet before the dealer deals the cards.
+- **Additional Options:**  
+  - **Double Down:** Double your bet in exchange for receiving one extra card and then standing.
+  - **Split:** If you have two cards of the same value, you can split them into two hands (with an additional bet equal to your original bet).
+
+*Tip:*  
+Proper betting can help manage risk and maximize potential gains.
 """,
-    2: """🃏 **Gameplay**
-1. The dealer gives two cards to each player.
-2. The player chooses to **Hit** (take another card) or **Stand** (take no more cards).
-3. The dealer must draw cards until reaching at least 17.
-4. If the player's hand exceeds 21, they Bust (lose).
+    2: """## Step 3: Gameplay
+**Game Flow:**  
+1. **Initial Deal:** The dealer gives two cards to each player and two to themselves (one card is usually hidden).  
+2. **Player's Turn:**  
+   - **Hit:** Request another card to improve your hand.  
+   - **Stand:** End your turn and keep your current hand.
+3. **Dealer's Turn:** The dealer reveals their hidden card and must keep drawing until their hand value reaches at least 17.
+4. **Outcome:**  
+   - If your hand exceeds 21, you Bust (lose automatically).  
+   - If neither busts, the hand closest to 21 wins.
 """,
-    3: """📊 **Probability & Strategy**
-- Basic Strategy: Guidance on the best decision for each card combination.
-- Card Counting: Using a Hi-Lo system to estimate the remaining cards.
-- Analysis and strategy recommendations to optimize your play.
+    3: """## Step 4: Probability & Strategy
+**Key Strategies:**  
+- **Basic Strategy:**  
+  Follow a set of guidelines that recommend the best action (Hit, Stand, Double Down, or Split) for every possible combination of your hand and the dealer's visible card.
+- **Card Counting (Hi-Lo System):**  
+  A method to estimate the ratio of high cards to low cards remaining in the deck, which can guide your decisions on betting and playing.
+- **Advanced Analysis:**  
+  Use probability analysis to determine optimal moves and manage risk effectively.
+
+*Remember:*  
+While strategy can improve your odds, Blackjack still involves an element of chance.
 """,
-    4: """🎯 **Practice Mode**
-Now the AI will act as the dealer.\n
-Example situation: Your cards: **10, 6** (Total 16) | Dealer's visible card: **9**
-During the game, type 'Hit' or 'Stand' to choose your action.
-You can also ask additional questions (e.g., "Why did my hand bust?").
+    4: """## Step 5: Practice Mode
+**Simulation Mode:**  
+Now, the AI will act as the dealer. Try playing a simulated game.
+
+**Example Scenario:**  
+- **Your Cards:** 10 and 6 (Total: 16)  
+- **Dealer's Visible Card:** 9
+
+**Instructions:**  
+- Type **'Hit'** if you want another card.
+- Type **'Stand'** if you want to hold your current hand.
+- You can also ask additional questions (e.g., "Why did my hand bust?" or "Should I hit on 16?").
+
+*Practice Tip:*  
+Experiment with different actions and ask questions to understand the outcomes better.
 """
 }
+
 
 # Card related functions
 card_values = {
