@@ -241,12 +241,12 @@ Answer the user's question in a way that relates to the current Blackjack lesson
     return ai_response
 
 def transcribe_audio(audio_bytes):
-    with tempfile.NamedTemporaryFile(delete=True, suffix=".webm") as temp_audio:
-        temp_audio.write(audio_bytes)  # 바이너리 데이터 저장
+    with tempfile.NamedTemporaryFile(delete=True, suffix=".wav") as temp_audio:
+        temp_audio.write(audio_bytes)  # 오디오 데이터를 임시 파일에 저장
         temp_audio.flush()  # 디스크에 반영
 
         # Whisper 모델에 파일 경로 전달
-        result = model.transcribe(temp_audio.name, language="ko")
+        result = model.transcribe(temp_audio.name, language="en")
 
     return result["text"]
 
@@ -260,7 +260,7 @@ st.markdown(step_texts[st.session_state.step])
 # Get user input
 user_input = st.text_input("Enter a question, or type 'next step' or 'current step':")
 
-audio = mic_recorder(start_prompt=f"Say!", stop_prompt="Stop", format="webm")
+audio = mic_recorder(start_prompt="Say!", stop_prompt="Stop", format="wav")  # WebM 대신 WAV 사용
 
 transcribed_text = transcribe_audio(audio)
 st.write(transcribed_text)
