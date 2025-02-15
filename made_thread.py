@@ -242,8 +242,8 @@ Answer the user's question in a way that relates to the current Blackjack lesson
 
 def transcribe_audio(audio_bytes):
     with tempfile.NamedTemporaryFile(delete=True, suffix=".webm") as temp_audio:
-        temp_audio.write(audio_bytes)
-        temp_audio.flush()
+        temp_audio.write(audio_bytes)  # 바이너리 데이터 저장
+        temp_audio.flush()  # 디스크에 반영
 
         # Whisper 모델에 파일 경로 전달
         result = model.transcribe(temp_audio.name, language="ko")
