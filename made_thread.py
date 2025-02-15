@@ -3,6 +3,7 @@ import random
 import time
 from openai import OpenAI  # New interface
 import os
+from streamlit_mic_recorder import mic_recorder
 
 # Set up your OpenAI API key (using environment variable or Streamlit secrets)
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
@@ -237,6 +238,8 @@ st.markdown(step_texts[st.session_state.step])
 
 # Get user input
 user_input = st.text_input("Enter a question, or type 'next step' or 'current step':")
+
+audio = mic_recorder(start_prompt=f"Say!", stop_prompt="Stop", format="webm")
 
 if st.button("Submit"):
     if user_input:
