@@ -6,6 +6,7 @@ import os
 from streamlit_mic_recorder import mic_recorder
 import io
 import whisper
+import tempfile
 
 # Set up your OpenAI API key (using environment variable or Streamlit secrets)
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
@@ -239,12 +240,16 @@ Answer the user's question in a way that relates to the current Blackjack lesson
     st.session_state.history.append({"role": "assistant", "content": ai_response})
     return ai_response
 
-def transcribe_audio(audio):
-    audio_file = io.BytesIO(audio)  # 바이너리 데이터를 파일 객체로 변환
-    audio_file.name = "audio.webm"  # OpenAI API는 파일 확장자가 필요함
-    
-    result = model.transcribe(audio_file, language='ko')
-    return result['text']
+def transcribe_audio(audio_bytes):
+    with tempfile.NamedTemporaryFile(delete=True, suffix=".webm") as temp_audio:
+        temp_audio.write(audio_bytes)
+        temp_audio.flush()
+
+        # Whisper 모델에 파일 경로 전달
+        result = model.transcribe(temp_audio.name, language="ko")
+
+    return result["text"]
+
 
 # Streamlit UI configuration
 st.title("Blackjack AI Tutor")
