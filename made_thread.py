@@ -27,7 +27,7 @@ if "dealer_score" not in st.session_state:
 
 # Hardcoded lesson texts for each step
 step_texts = {
-    0: """## Step 1: Blackjack Basic Rules
+    0: """#### Step 1: Blackjack Basic Rules
 **Objective:**  
 Beat the dealer by having a hand value closer to 21 without exceeding it.
 
@@ -39,7 +39,7 @@ Beat the dealer by having a hand value closer to 21 without exceeding it.
 *Example:*  
 If you have an Ace and a 7, your total can be either 8 or 18.
 """,
-    1: """## Step 2: Betting Methods
+    1: """#### Step 2: Betting Methods
 **How to Place a Bet:**  
 - **Minimum Bet:** Typically starts from \$5 to \$10.  
 - **When to Bet:** Place your bet before the dealer deals the cards.
@@ -50,7 +50,7 @@ If you have an Ace and a 7, your total can be either 8 or 18.
 *Tip:*  
 Proper betting can help manage risk and maximize potential gains.
 """,
-    2: """## Step 3: Gameplay
+    2: """#### Step 3: Gameplay
 **Game Flow:**  
 1. **Initial Deal:** The dealer gives two cards to each player and two to themselves (one card is usually hidden).  
 2. **Player's Turn:**  
@@ -61,7 +61,7 @@ Proper betting can help manage risk and maximize potential gains.
    - If your hand exceeds 21, you Bust (lose automatically).  
    - If neither busts, the hand closest to 21 wins.
 """,
-    3: """## Step 4: Probability & Strategy
+    3: """#### Step 4: Probability & Strategy
 **Key Strategies:**  
 - **Basic Strategy:**  
   Follow a set of guidelines that recommend the best action (Hit, Stand, Double Down, or Split) for every possible combination of your hand and the dealer's visible card.
@@ -73,7 +73,7 @@ Proper betting can help manage risk and maximize potential gains.
 *Remember:*  
 While strategy can improve your odds, Blackjack still involves an element of chance.
 """,
-    4: """## Step 5: Practice Mode
+    4: """#### Step 5: Practice Mode
 **Simulation Mode:**  
 Now, the AI will act as the dealer. Try playing a simulated game.
 
