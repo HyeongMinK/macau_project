@@ -247,7 +247,7 @@ def transcribe_audio(audio_bytes):
         temp_audio.flush()
         webm_path = temp_audio.name  # WebM 파일 경로
     # Whisper에 파일 경로 전달
-    result = model.transcribe(webm_path, language="ko")
+    result = model.transcribe(webm_path, language="en")
 
     # 파일 정리 (임시 파일 삭제)
     temp_audio.close()
