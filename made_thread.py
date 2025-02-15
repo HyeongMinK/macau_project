@@ -200,6 +200,15 @@ st.markdown("Learn Blackjack step-by-step. Each lesson's explanation is hardcode
 st.markdown(f"### Current Step: {st.session_state.step+1}")
 st.markdown(step_texts[st.session_state.step])
 
+
+# Get user input
+user_input = st.text_input("Enter a question, or type 'next step' or 'current step':")
+
+if st.button("Submit"):
+    if user_input:
+        output = gpt_call(user_input)
+        st.write(output)
+
 # If in Practice Mode and game is active, display the current card status in a nice layout
 if st.session_state.step == 4 and st.session_state.game_active:
     col1, col2 = st.columns(2)
@@ -214,11 +223,3 @@ if st.session_state.step == 4 and st.session_state.game_active:
         else:
             st.markdown(f"<h2>{' '.join(st.session_state.dealer_hand)}</h2>", unsafe_allow_html=True)
         st.markdown(f"**Total:** {st.session_state.dealer_score if not st.session_state.game_active else 'Hidden'}")
-
-# Get user input
-user_input = st.text_input("Enter a question, or type 'next step' or 'current step':")
-
-if st.button("Submit"):
-    if user_input:
-        output = gpt_call(user_input)
-        st.write(output)
