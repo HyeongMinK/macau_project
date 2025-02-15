@@ -5,7 +5,7 @@ from openai import OpenAI  # New interface
 import os
 
 # Set up your OpenAI API key (using environment variable or Streamlit secrets)
-client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # Initialize session state variables
 if "step" not in st.session_state:
@@ -142,7 +142,7 @@ Current game state:
 Answer the user's question in relation to the current game.
 """
         try:
-            api_response = client.ChatCompletion.create(
+            api_response = client.chat.completions.create(
                 model="gpt-4",
                 messages=[
                     {"role": "system", "content": system_prompt},
@@ -180,7 +180,7 @@ The user is currently at **Step {st.session_state.step}**:
 Answer the user's question in a way that relates to the current Blackjack lesson.
 """
     try:
-        api_response = client.ChatCompletion.create(
+        api_response = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": system_prompt},
