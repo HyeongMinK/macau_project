@@ -7,6 +7,7 @@ from streamlit_mic_recorder import mic_recorder
 import io
 import whisper
 import tempfile
+from pydub import AudioSegment
 
 # Set up your OpenAI API key (using environment variable or Streamlit secrets)
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
@@ -241,14 +242,27 @@ Answer the user's question in a way that relates to the current Blackjack lesson
     return ai_response
 
 def transcribe_audio(audio_bytes):
-    with tempfile.NamedTemporaryFile(delete=True, suffix=".wav") as temp_audio:
-        temp_audio.write(audio_bytes)  # 오디오 데이터를 임시 파일에 저장
-        temp_audio.flush()  # 디스크에 반영
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as temp_audio:
+        temp_audio.write(audio_bytes)  # WebM 오디오 데이터를 임시 파일에 저장
+        temp_audio.flush()
+        webm_path = temp_audio.name  # WebM 파일 경로
 
-        # Whisper 모델에 파일 경로 전달
-        result = model.transcribe(temp_audio.name, language="en")
+    # WebM → WAV 변환 (FFmpeg 없이 pydub 사용)
+    wav_path = webm_path.replace(".webm", ".wav")
+    audio = AudioSegment.from_file(webm_path, format="webm")  # WebM 로드
+    audio = audio.set_frame_rate(16000).set_channels(1)  # Whisper는 16kHz, Mono 지원
+    audio.export(wav_path, format="wav")  # WAV 변환 및 저장
+
+    # Whisper에 파일 경로 전달
+    result = model.transcribe(wav_path, language="ko")
+
+    # 파일 정리 (임시 파일 삭제)
+    temp_audio.close()
+    os.remove(webm_path)
+    os.remove(wav_path)
 
     return result["text"]
+
 
 
 # Streamlit UI configuration
@@ -260,7 +274,7 @@ st.markdown(step_texts[st.session_state.step])
 # Get user input
 user_input = st.text_input("Enter a question, or type 'next step' or 'current step':")
 
-audio = mic_recorder(start_prompt="Say!", stop_prompt="Stop", format="wav")  # WebM 대신 WAV 사용
+audio = mic_recorder(start_prompt=f"Say!", stop_prompt="Stop", format="webm")
 
 transcribed_text = transcribe_audio(audio)
 st.write(transcribed_text)
