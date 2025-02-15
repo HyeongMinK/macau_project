@@ -50,7 +50,7 @@ Blackjack is a game where you try to beat the dealer by having a hand value clos
 - Analysis and strategy recommendations to optimize your play.
 """,
     4: """🎯 **Practice Mode**
-Now the AI will act as the dealer.
+Now the AI will act as the dealer.\n
 Example situation: Your cards: **10, 6** (Total 16) | Dealer's visible card: **9**
 During the game, type 'Hit' or 'Stand' to choose your action.
 You can also ask additional questions (e.g., "Why did my hand bust?").
