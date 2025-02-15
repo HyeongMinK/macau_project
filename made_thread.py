@@ -4,9 +4,18 @@ import time
 from openai import OpenAI  # New interface
 import os
 from streamlit_mic_recorder import mic_recorder
+import io
+import whisper
 
 # Set up your OpenAI API key (using environment variable or Streamlit secrets)
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
+# Load the Whisper model
+@st.cache_resource
+def load_whisper_model():
+    return whisper.load_model("small")
+
+model = load_whisper_model()
 
 # Initialize session state variables
 if "step" not in st.session_state:
@@ -230,6 +239,13 @@ Answer the user's question in a way that relates to the current Blackjack lesson
     st.session_state.history.append({"role": "assistant", "content": ai_response})
     return ai_response
 
+def transcribe_audio(audio):
+    audio_file = io.BytesIO(audio)  # 바이너리 데이터를 파일 객체로 변환
+    audio_file.name = "audio.webm"  # OpenAI API는 파일 확장자가 필요함
+    
+    result = model.transcribe(audio_file, language='ko')
+    return result['text']
+
 # Streamlit UI configuration
 st.title("Blackjack AI Tutor")
 st.markdown("Learn Blackjack step-by-step.")
@@ -240,6 +256,7 @@ st.markdown(step_texts[st.session_state.step])
 user_input = st.text_input("Enter a question, or type 'next step' or 'current step':")
 
 audio = mic_recorder(start_prompt=f"Say!", stop_prompt="Stop", format="webm")
+
 
 if st.button("Submit"):
     if user_input:
