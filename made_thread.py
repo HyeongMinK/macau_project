@@ -277,7 +277,7 @@ user_input = st.text_input("Enter a question, or type 'next step' or 'current st
 audio = mic_recorder(start_prompt=f"Say!", stop_prompt="Stop", format="webm")
 if audio:
     transcribed_text = transcribe_audio(audio)
-st.write(transcribed_text)
+    st.write(transcribed_text)
 
 if st.button("Submit"):
     if user_input:
