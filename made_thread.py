@@ -35,6 +35,10 @@ if 'des' not in st.session_state:
 if 'start' not in st.session_state:
     st.session_state.start = True
 
+if 'game_init' not in st.session_state:
+    st.session_state.game_init = False
+
+
 # Initialize session state variables
 if "step" not in st.session_state:
     st.session_state.step = 0  # 0: Rules, 1: Betting, 2: Game Play, 3: Strategy, 4: Practice
@@ -163,6 +167,7 @@ def blackjack_game(user_input):
     # Initialize game if not already active
     if not st.session_state.game_active:
         st.session_state.game_active = True
+        st.session_state.game_init = True
         st.session_state.player_hand = [draw_card(), draw_card()]
         st.session_state.dealer_hand = [draw_card(), draw_card()]
         st.session_state.player_score = calculate_hand(st.session_state.player_hand)
@@ -348,7 +353,7 @@ if not st.session_state.start:
 
 
     # If in Practice Mode and game is active, display the current card status in a nice layout
-    if st.session_state.step == 5 and st.session_state.game_active:
+    if st.session_state.step == 5 and st.session_state.game_init:
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("**Your Hand:**")
