@@ -336,13 +336,13 @@ if not st.session_state.start:
             st.session_state.des = True
             st.rerun()
 
-    if st.session_state.step == 5 and not st.session_state.game_active and st.session_state.game_init:
+    if st.session_state.step == 5 and not st.session_state.game_active and not st.session_state.game_init:
         if st.button("Let's Play!"):
             blackjack_game("init")
             st.session_state.tts_audio_data = False
             st.rerun()
 
-    if st.session_state.step == 5 and not st.session_state.game_active and not st.session_state.game_init:
+    if st.session_state.step == 5 and not st.session_state.game_active and st.session_state.game_init:
         if st.button("Let's Play Again!"):
             blackjack_game("init")
             st.session_state.tts_audio_data = False
