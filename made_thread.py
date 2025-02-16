@@ -336,7 +336,11 @@ if audio and st.session_state.is_recording:
     transcribed_text = remove_special_characters(transcribe_audio(audio["bytes"]))
     #st.write(transcribed_text)
     st.session_state.output = gpt_call(transcribed_text)
-    st.session_state.tts_audio_data=text_to_speech(client, """In Blackjack, understanding probability and strategy can significantly improve your chances of winning. The most essential tool is Basic Strategy, which provides the optimal move for every hand combination based on statistical analysis. It tells you when to Hit, Stand, Double Down, or Split to maximize your odds of success. Another technique is Card Counting, particularly the Hi-Lo System, which helps track the ratio of high to low-value cards in the deck. When more high-value cards remain, the player has an advantage, making it a good time to increase bets. However, while legal, casinos discourage card counting and may intervene if they suspect it. Lastly, Advanced Analysis involves using probability models to refine decision-making beyond basic strategy. While no method guarantees a win, applying these strategies can help you play smarter and reduce the house edge. Now, let's move on to the next step and put these concepts into practice!
+    st.session_state.tts_audio_data=text_to_speech(client, """Welcome to Step 5 of your Blackjack learning journey. Before we begin practice mode, let’s take a moment to talk about responsible gambling.
+Blackjack is a game of both skill and chance, but it should always remain a form of entertainment. Set a limit on your time and budget before you start, and never chase losses. The house always has an edge, so focus on making smart decisions rather than expecting to win every hand.
+It's also important to be aware of your emotions while playing. If you feel frustrated or tempted to keep going despite losses, take a break. And remember, never gamble under pressure or the influence of alcohol.
+If gambling ever feels like more than just a game, seek support. There are resources available to help.
+With that in mind, let’s move on to Practice Mode and apply what you’ve learned in a controlled environment!
 """)
     st.session_state.is_recording = False
     st.rerun()
