@@ -323,13 +323,17 @@ if not st.session_state.start:
         st.session_state.is_recording = False
         st.session_state.des = False
         st.rerun()
-        
+
     if st.session_state.step < 5:
         if st.button("Next Step"):
             st.session_state.tts_audio_data = False
             st.session_state.step += 1
             st.session_state.des = True
             st.rerun()
+
+    if st.session_state.step == 5:
+        if st.button("Let's Play!"):
+            blackjack_game("init")
 
     if st.session_state.des:  
         st.audio(f"{st.session_state.step}_step.mp3", format='audio/mp3', autoplay=True)
