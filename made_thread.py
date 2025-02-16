@@ -302,7 +302,7 @@ if audio and st.session_state.is_recording:
     st.session_state.is_recording = False
     st.rerun()
 
-if st.session_state.output:
+if st.session_state.output and st.session_state.output !='next step':
     st.write(st.session_state.output)
 
 if st.session_state.tts_audio_data:
