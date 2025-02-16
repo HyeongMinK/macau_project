@@ -313,7 +313,8 @@ def text_to_speech(client, text):
     response = client.audio.speech.create(
         model="tts-1",
         voice="echo",
-        input=text
+        input=text,
+        speed = 1.2
     )
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as tmp_audio_file:
         response.stream_to_file(tmp_audio_file.name)
