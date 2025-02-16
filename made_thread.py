@@ -336,7 +336,7 @@ if audio and st.session_state.is_recording:
     transcribed_text = remove_special_characters(transcribe_audio(audio["bytes"]))
     #st.write(transcribed_text)
     st.session_state.output = gpt_call(transcribed_text)
-    st.session_state.tts_audio_data=text_to_speech(client, st.session_state.output)
+    st.session_state.tts_audio_data=text_to_speech(client, step_texts[0])
     st.session_state.is_recording = False
     st.rerun()
 
