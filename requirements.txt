@@ -5,3 +5,5 @@ openai-whisper
 openai
 pydub
 imageio[ffmpeg]
+torch
+imageio
