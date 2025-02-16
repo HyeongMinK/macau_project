@@ -336,11 +336,9 @@ if audio and st.session_state.is_recording:
     transcribed_text = remove_special_characters(transcribe_audio(audio["bytes"]))
     #st.write(transcribed_text)
     st.session_state.output = gpt_call(transcribed_text)
-    st.session_state.tts_audio_data=text_to_speech(client, """Welcome to Step 5 of your Blackjack learning journey. Before we begin practice mode, let’s take a moment to talk about responsible gambling.
-Blackjack is a game of both skill and chance, but it should always remain a form of entertainment. Set a limit on your time and budget before you start, and never chase losses. The house always has an edge, so focus on making smart decisions rather than expecting to win every hand.
-It's also important to be aware of your emotions while playing. If you feel frustrated or tempted to keep going despite losses, take a break. And remember, never gamble under pressure or the influence of alcohol.
-If gambling ever feels like more than just a game, seek support. There are resources available to help.
-With that in mind, let’s move on to Practice Mode and apply what you’ve learned in a controlled environment!
+    st.session_state.tts_audio_data=text_to_speech(client, """Now, it's time to put everything you've learned into practice! In this simulation mode, the AI will act as the dealer, and you’ll play a round of Blackjack just like in a real game.
+During your turn, you have two main options: Hit to take another card or Stand to keep your current hand. The goal remains the same—get as close to 21 as possible without going over. If you're unsure about a move, feel free to ask questions like, ‘Should I hit on 16?’ or ‘Why did my hand bust?’
+This practice session is a great opportunity to experiment with different decisions and refine your strategy. Let’s see how well you can play!
 """)
     st.session_state.is_recording = False
     st.rerun()
