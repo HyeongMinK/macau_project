@@ -4,3 +4,4 @@ streamlit-mic-recorder
 openai-whisper
 openai
 pydub
+ffmpeg
