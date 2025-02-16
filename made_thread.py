@@ -318,7 +318,7 @@ if not st.session_state.start:
     st.markdown(step_texts[st.session_state.step])
 
 
-    if st.session_state.game_active:
+    if st.session_state.step != 5 or st.session_state.game_active and st.session_state.game_init:
         audio = mic_recorder(start_prompt=f"Say!", stop_prompt="Stop", format="webm", callback = state_recode)
         if audio and st.session_state.is_recording:
             transcribed_text = remove_special_characters(transcribe_audio(audio["bytes"]))
