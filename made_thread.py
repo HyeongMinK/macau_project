@@ -336,7 +336,9 @@ if audio and st.session_state.is_recording:
     transcribed_text = remove_special_characters(transcribe_audio(audio["bytes"]))
     #st.write(transcribed_text)
     st.session_state.output = gpt_call(transcribed_text)
-    st.session_state.tts_audio_data=text_to_speech(client, step_texts[0])
+    st.session_state.tts_audio_data=text_to_speech(client, """Now that we understand the basic rules of Blackjack, let's talk about betting methods.
+Before the game begins, every player must place a bet. In most casinos, the minimum bet is typically $500 or $1000, though this can vary depending on the table. This bet must be placed before the dealer starts dealing the cards, so it's important to decide how much you're willing to wager before the game begins. Once the initial bet is placed, the game begins. However, during the round, there are a few additional betting options you might consider. First is Double Down. If you're confident in your hand, you have the option to double your original bet in exchange for receiving one more card before you must stand. This move can be risky, but it is often used when players believe they have a strong chance of winning. The second option is Split. If your first two cards have the same value, such as a pair of 8s or a pair of Kings, you can split them into two separate hands. To do this, you must place an additional bet equal to your original wager. After splitting, each hand will be played separately, giving you a chance to win twice—but also doubling the risk.
+""")
     st.session_state.is_recording = False
     st.rerun()
 
