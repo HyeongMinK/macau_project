@@ -32,6 +32,8 @@ if 'tts_audio_data' not in st.session_state:
 if 'des' not in st.session_state:
     st.session_state.des = True
 
+if 'start' not in st.session_state:
+    st.session_state.start = True
 
 # Initialize session state variables
 if "step" not in st.session_state:
@@ -299,51 +301,54 @@ def text_to_speech(client, text):
     return tmp_file_name
 
 
-
 # Streamlit UI configuration
 st.title("Blackjack AI Tutor")
 st.markdown("Learn Blackjack step-by-step.")
-st.markdown(step_texts[st.session_state.step])
+if st.session_state.start:
+    st.session_state.start = False
+
+if not st.session_state.start:
+    st.markdown(step_texts[st.session_state.step])
 
 
 
-audio = mic_recorder(start_prompt=f"Say!", stop_prompt="Stop", format="webm", callback = state_recode)
-if audio and st.session_state.is_recording:
-    transcribed_text = remove_special_characters(transcribe_audio(audio["bytes"]))
-    #st.write(transcribed_text)
-    st.session_state.output = gpt_call(transcribed_text)
-    st.session_state.tts_audio_data=text_to_speech(client, st.session_state.output)
-    st.session_state.is_recording = False
-    st.session_state.des = False
-    st.rerun()
+    audio = mic_recorder(start_prompt=f"Say!", stop_prompt="Stop", format="webm", callback = state_recode)
+    if audio and st.session_state.is_recording:
+        transcribed_text = remove_special_characters(transcribe_audio(audio["bytes"]))
+        #st.write(transcribed_text)
+        st.session_state.output = gpt_call(transcribed_text)
+        st.session_state.tts_audio_data=text_to_speech(client, st.session_state.output)
+        st.session_state.is_recording = False
+        st.session_state.des = False
+        st.rerun()
 
-if st.button("Next Step"):
-    st.session_state.tts_audio_data = False
-    st.session_state.step += 1
-    st.session_state.des = True
-    st.rerun()
+    if st.button("Next Step"):
+        st.session_state.tts_audio_data = False
+        st.session_state.step += 1
+        st.session_state.des = True
+        st.rerun()
+
+    if st.session_state.des:  
+        st.audio(f"{st.session_state.step}_step.mp3", format='audio/mp3', autoplay=True)
+
+    if st.session_state.tts_audio_data and st.session_state.output !='next step':
+        st.write(st.session_state.output)
+
+    if st.session_state.tts_audio_data:
+        st.audio(st.session_state.tts_audio_data, format='audio/mp3', autoplay=True)
 
 
-st.audio(f"{st.session_state.step}_step.mp3", format='audio/mp3', autoplay=True)
-
-if st.session_state.tts_audio_data and st.session_state.output !='next step':
-    st.write(st.session_state.output)
-
-if st.session_state.tts_audio_data:
-    st.audio(st.session_state.tts_audio_data, format='audio/mp3', autoplay=True)
-
-
-# If in Practice Mode and game is active, display the current card status in a nice layout
-if st.session_state.step == 4 and st.session_state.game_active:
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("**Your Hand:**")
-        st.markdown(f"<h2>{' '.join(st.session_state.player_hand)}</h2>", unsafe_allow_html=True)
-        st.markdown(f"**Total:** {st.session_state.player_score}")
-    with col2:
-        st.markdown("**Dealer's Hand:**")
-        if st.session_state.game_active:
-            st.markdown(f"<h2>{st.session_state.dealer_hand[0]}  ???</h2>", unsafe_allow_html=True)
-        else:
-            st.markdown(f"<h2>{' '.join(st.session_state.dealer_hand)}</h2>", unsafe_allow_html=True)
-        st.markdown(f"**Total:** {st.session_state.dealer_score if not st.session_state.game_active else 'Hidden'}")
+    # If in Practice Mode and game is active, display the current card status in a nice layout
+    if st.session_state.step == 4 and st.session_state.game_active:
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("**Your Hand:**")
+            st.markdown(f"<h2>{' '.join(st.session_state.player_hand)}</h2>", unsafe_allow_html=True)
+            st.markdown(f"**Total:** {st.session_state.player_score}")
+        with col2:
+            st.markdown("**Dealer's Hand:**")
+            if st.session_state.game_active:
+                st.markdown(f"<h2>{st.session_state.dealer_hand[0]}  ???</h2>", unsafe_allow_html=True)
+            else:
+                st.markdown(f"<h2>{' '.join(st.session_state.dealer_hand)}</h2>", unsafe_allow_html=True)
+            st.markdown(f"**Total:** {st.session_state.dealer_score if not st.session_state.game_active else 'Hidden'}")
