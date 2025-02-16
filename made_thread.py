@@ -303,7 +303,7 @@ if audio and st.session_state.is_recording:
     st.rerun()
 
 if st.session_state.output:
-    st.write(st.write(st.session_state.output))
+    st.write(st.session_state.output)
 
 if st.session_state.tts_audio_data:
     st.audio(st.session_state.tts_audio_data, format='audio/mp3', autoplay=True)
