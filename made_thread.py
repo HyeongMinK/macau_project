@@ -305,7 +305,9 @@ def text_to_speech(client, text):
 st.title("Blackjack AI Tutor")
 st.markdown("Learn Blackjack step-by-step.")
 if st.session_state.start:
-    st.session_state.start = False
+    if st.button("Start!"):
+        st.session_state.start = False
+        st.rerun()
 
 if not st.session_state.start:
     st.markdown(step_texts[st.session_state.step])
