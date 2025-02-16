@@ -8,9 +8,10 @@ import io
 import whisper
 import tempfile
 from pydub import AudioSegment
+import re
 
 # Set up your OpenAI API key (using environment variable or Streamlit secrets)
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 # Load the Whisper model
 @st.cache_resource
@@ -18,6 +19,16 @@ def load_whisper_model():
     return whisper.load_model("small")
 
 model = load_whisper_model()
+
+if 'is_recording' not in st.session_state:
+    st.session_state.is_recording = False
+
+if 'output' not in st.session_state:
+    st.session_state.output = False
+
+if 'tts_audio_data' not in st.session_state:
+    st.session_state.tts_audio_data = False
+
 
 # Initialize session state variables
 if "step" not in st.session_state:
@@ -210,8 +221,7 @@ def gpt_call(user_input):
     if user_input.strip().lower() == "next step":
         st.session_state.step += 1
         st.session_state.pending_questions = False
-        st.rerun()
-        return f"🎉 **Moving to the next step!**\n\n{step_texts[st.session_state.step]}"
+        return step_texts[st.session_state.step]
     
     # If user types "current step", show the current step description
     if user_input.strip().lower() == "current step":
@@ -255,6 +265,26 @@ def transcribe_audio(audio_bytes):
     return result["text"]
 
 
+def remove_special_characters(text):
+    return re.sub(r"[^a-zA-Z0-9\s]", "", text)  # 알파벳, 숫자, 공백만 남김
+
+
+def state_recode():
+    st.session_state.is_recording = True
+
+def text_to_speech(client, text):
+    response = client.audio.speech.create(
+        model="tts-1",
+        voice="echo",
+        input=text
+    )
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as tmp_audio_file:
+        response.stream_to_file(tmp_audio_file.name)
+        tmp_file_name = tmp_audio_file.name
+    
+    return tmp_file_name
+
+
 
 # Streamlit UI configuration
 st.title("Blackjack AI Tutor")
@@ -262,18 +292,22 @@ st.markdown("Learn Blackjack step-by-step.")
 st.markdown(step_texts[st.session_state.step])
 
 
-# Get user input
-user_input = st.text_input("Enter a question, or type 'next step' or 'current step':")
 
-audio = mic_recorder(start_prompt=f"Say!", stop_prompt="Stop", format="webm")
-if audio:
-    transcribed_text = transcribe_audio(audio["bytes"])
-    st.write(transcribed_text)
+audio = mic_recorder(start_prompt=f"Say!", stop_prompt="Stop", format="webm", callback = state_recode)
+if audio and st.session_state.is_recording:
+    transcribed_text = remove_special_characters(transcribe_audio(audio["bytes"]))
+    #st.write(transcribed_text)
+    st.session_state.output = gpt_call(transcribed_text)
+    st.session_state.tts_audio_data=text_to_speech(client, st.session_state.output)
+    st.session_state.is_recording = False
+    st.rerun()
 
-if st.button("Submit"):
-    if user_input:
-        output = gpt_call(user_input)
-        st.write(output)
+if st.session_state.output:
+    st.write(st.write(st.session_state.output))
+
+if st.session_state.tts_audio_data:
+    st.audio(st.session_state.tts_audio_data, format='audio/mp3', autoplay=True)
+
 
 # If in Practice Mode and game is active, display the current card status in a nice layout
 if st.session_state.step == 4 and st.session_state.game_active:
