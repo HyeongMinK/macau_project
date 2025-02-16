@@ -331,9 +331,10 @@ if not st.session_state.start:
             st.session_state.des = True
             st.rerun()
 
-    if st.session_state.step == 5:
+    if st.session_state.step == 5 and not st.session_state.game_active:
         if st.button("Let's Play!"):
             blackjack_game("init")
+            st.rerun()
 
     if st.session_state.des:  
         st.audio(f"{st.session_state.step}_step.mp3", format='audio/mp3', autoplay=True)
