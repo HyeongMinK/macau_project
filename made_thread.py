@@ -320,14 +320,14 @@ if not st.session_state.start:
 
     if not st.session_state.game_active:
         audio = mic_recorder(start_prompt=f"Say!", stop_prompt="Stop", format="webm", callback = state_recode)
-    if audio and st.session_state.is_recording:
-        transcribed_text = remove_special_characters(transcribe_audio(audio["bytes"]))
-        #st.write(transcribed_text)
-        st.session_state.output = gpt_call(transcribed_text)
-        st.session_state.tts_audio_data=text_to_speech(client, st.session_state.output)
-        st.session_state.is_recording = False
-        st.session_state.des = False
-        st.rerun()
+        if audio and st.session_state.is_recording:
+            transcribed_text = remove_special_characters(transcribe_audio(audio["bytes"]))
+            #st.write(transcribed_text)
+            st.session_state.output = gpt_call(transcribed_text)
+            st.session_state.tts_audio_data=text_to_speech(client, st.session_state.output)
+            st.session_state.is_recording = False
+            st.session_state.des = False
+            st.rerun()
 
     if st.session_state.step < 5:
         if st.button("Next Step"):
