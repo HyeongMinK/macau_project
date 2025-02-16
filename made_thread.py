@@ -31,7 +31,6 @@ if 'tts_audio_data' not in st.session_state:
 
 if 'des' not in st.session_state:
     st.session_state.des = True
-    st.rerun()
 
 
 # Initialize session state variables
@@ -324,8 +323,8 @@ if st.button("Next Step"):
     st.session_state.des = True
     st.rerun()
 
-if st.session_state.des:  
-    st.audio(f"{st.session_state.step}_step.mp3", format='audio/mp3', autoplay=True)
+
+st.audio(f"{st.session_state.step}_step.mp3", format='audio/mp3', autoplay=True)
 
 if st.session_state.tts_audio_data and st.session_state.output !='next step':
     st.write(st.session_state.output)
