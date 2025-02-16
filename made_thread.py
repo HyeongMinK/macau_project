@@ -31,6 +31,7 @@ if 'tts_audio_data' not in st.session_state:
 
 if 'des' not in st.session_state:
     st.session_state.des = True
+    st.rerun()
 
 
 # Initialize session state variables
