@@ -29,6 +29,9 @@ if 'output' not in st.session_state:
 if 'tts_audio_data' not in st.session_state:
     st.session_state.tts_audio_data = False
 
+if 'des' not in st.session_state:
+    st.session_state.des = True
+
 
 # Initialize session state variables
 if "step" not in st.session_state:
@@ -122,33 +125,6 @@ Experiment with different actions and ask questions to understand the outcomes b
 """
 }
 
-# Hardcoded lesson texts for each step
-step_texts = {
-    0: """Welcome to Step 1 of your Blackjack learning journey! Before we dive into strategy and gameplay, let’s start with the basic rules of the game. Blackjack is a card game where your goal is to beat the dealer by having a hand value closer to 21 without exceeding it. It’s a simple objective, but there are key rules you need to understand first. Each card has a specific value. Number cards, from 2 to 10, are worth their face value. and Face cards, which are Jack, Queen, and King, are all worth 10 points each. lastly, Aces are unique because they can be counted as either 1 or 11, depending on what benefits your hand the most. For example, if you’re dealt an Ace and a 7, your total could be either 8 or 18, giving you some flexibility in your decisions. The game starts when both you and the dealer receive two cards. The dealer keeps one card hidden, so you don’t know their full hand yet. From there, it’s all about making smart choices based on what you have and what the dealer might have.
-Now that we’ve covered the basics, let’s move on to the next step—understanding how betting works in Blackjack.
-""",
-    1: """Now that we understand the basic rules of Blackjack, let's talk about betting methods.
-Before the game begins, every player must place a bet. In most casinos, the minimum bet is typically $500 or $1000, though this can vary depending on the table. This bet must be placed before the dealer starts dealing the cards, so it's important to decide how much you're willing to wager before the game begins. Once the initial bet is placed, the game begins. However, during the round, there are a few additional betting options you might consider. First is Double Down. If you're confident in your hand, you have the option to double your original bet in exchange for receiving one more card before you must stand. This move can be risky, but it is often used when players believe they have a strong chance of winning. The second option is Split. If your first two cards have the same value, such as a pair of 8s or a pair of Kings, you can split them into two separate hands. To do this, you must place an additional bet equal to your original wager. After splitting, each hand will be played separately, giving you a chance to win twice—but also doubling the risk.
-""",
-    2: """In Blackjack, the game begins with the initial deal. Each player, including the dealer, receives two cards. However, while the players can see both of their own cards, the dealer keeps one card hidden, known as the hole card.
-Once the cards are dealt, it is the player’s turn. Players must decide whether to take additional cards or keep their current hand. If a player chooses to Hit, they receive another card in an attempt to improve their total. This can be beneficial when their hand is far from 21. Alternatively, if they believe their current total is strong enough, they may choose to Stand, ending their turn without drawing more cards.
-After all players have completed their turns, the dealer’s turn begins. The dealer reveals their hidden card and follows a fixed rule—they must continue drawing cards until their hand reaches at least 17. If their total is 17 or higher, they must stand.
-Finally, the game determines the outcome. If a player's total exceeds 21 at any point, they automatically lose, known as a bust. If neither the player nor the dealer busts, the winner is the one with a hand closest to 21. If both have the same total, the round ends in a tie, or a push, and the player’s bet is returned.
-Understanding when to Hit or Stand is crucial for success in Blackjack, and as we move forward, we will explore strategies to help you make better decisions during gameplay.
-""",
-    3: """In Blackjack, understanding probability and strategy can significantly improve your chances of winning. The most essential tool is Basic Strategy, which provides the optimal move for every hand combination based on statistical analysis. It tells you when to Hit, Stand, Double Down, or Split to maximize your odds of success. Another technique is Card Counting, particularly the Hi-Lo System, which helps track the ratio of high to low-value cards in the deck. When more high-value cards remain, the player has an advantage, making it a good time to increase bets. However, while legal, casinos discourage card counting and may intervene if they suspect it. Lastly, Advanced Analysis involves using probability models to refine decision-making beyond basic strategy. While no method guarantees a win, applying these strategies can help you play smarter and reduce the house edge. Now, let's move on to the next step and put these concepts into practice!
-""",
-    4: """Welcome to Step 5 of your Blackjack learning journey. Before we begin practice mode, let’s take a moment to talk about responsible gambling.
-Blackjack is a game of both skill and chance, but it should always remain a form of entertainment. Set a limit on your time and budget before you start, and never chase losses. The house always has an edge, so focus on making smart decisions rather than expecting to win every hand.
-It's also important to be aware of your emotions while playing. If you feel frustrated or tempted to keep going despite losses, take a break. And remember, never gamble under pressure or the influence of alcohol.
-If gambling ever feels like more than just a game, seek support. There are resources available to help.
-With that in mind, let’s move on to Practice Mode and apply what you’ve learned in a controlled environment!
-""",
-    5: """Now, it's time to put everything you've learned into practice! In this simulation mode, the AI will act as the dealer, and you’ll play a round of Blackjack just like in a real game.
-During your turn, you have two main options: Hit to take another card or Stand to keep your current hand. The goal remains the same—get as close to 21 as possible without going over. If you're unsure about a move, feel free to ask questions like, ‘Should I hit on 16?’ or ‘Why did my hand bust?’
-This practice session is a great opportunity to experiment with different decisions and refine your strategy. Let’s see how well you can play!
-"""
-}
 
 
 
@@ -336,14 +312,21 @@ if audio and st.session_state.is_recording:
     transcribed_text = remove_special_characters(transcribe_audio(audio["bytes"]))
     #st.write(transcribed_text)
     st.session_state.output = gpt_call(transcribed_text)
-    st.session_state.tts_audio_data=text_to_speech(client, """Now, it's time to put everything you've learned into practice! In this simulation mode, the AI will act as the dealer, and you’ll play a round of Blackjack just like in a real game.
-During your turn, you have two main options: Hit to take another card or Stand to keep your current hand. The goal remains the same—get as close to 21 as possible without going over. If you're unsure about a move, feel free to ask questions like, ‘Should I hit on 16?’ or ‘Why did my hand bust?’
-This practice session is a great opportunity to experiment with different decisions and refine your strategy. Let’s see how well you can play!
-""")
+    st.session_state.tts_audio_data=text_to_speech(client, st.session_state.output)
     st.session_state.is_recording = False
+    st.session_state.des = False
     st.rerun()
 
-if st.session_state.output and st.session_state.output !='next step':
+if st.button("Next Step"):
+    st.session_state.tts_audio_data = False
+    st.session_state.step += 1
+    st.session_state.des = True
+    st.rerun()
+
+if st.session_state.des:  
+    st.audio(f"/mnt/data/{st.session_state.step}_step", format='audio/mp3', autoplay=True)
+
+if st.session_state.tts_audio_data and st.session_state.output !='next step':
     st.write(st.session_state.output)
 
 if st.session_state.tts_audio_data:
