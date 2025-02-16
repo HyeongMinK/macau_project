@@ -338,7 +338,7 @@ if not st.session_state.start:
     if st.session_state.des:  
         st.audio(f"{st.session_state.step}_step.mp3", format='audio/mp3', autoplay=True)
 
-    if st.session_state.tts_audio_data and st.session_state.output !='next step':
+    if st.session_state.tts_audio_data:
         st.write(st.session_state.output)
 
     if st.session_state.tts_audio_data:
@@ -346,7 +346,7 @@ if not st.session_state.start:
 
 
     # If in Practice Mode and game is active, display the current card status in a nice layout
-    if st.session_state.step == 4 and st.session_state.game_active:
+    if st.session_state.step == 5 and st.session_state.game_active:
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("**Your Hand:**")
