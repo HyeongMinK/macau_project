@@ -250,8 +250,8 @@ def transcribe_audio(audio_bytes):
     result = model.transcribe(webm_path, language="en")
 
     # 파일 정리 (임시 파일 삭제)
-    temp_audio.close()
-    os.remove(webm_path)
+    #temp_audio.close()
+    #os.remove(webm_path)
     return result["text"]
 
 
