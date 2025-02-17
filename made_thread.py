@@ -308,7 +308,7 @@ def text_to_speech(client, text):
 
 
 # Streamlit UI configuration
-st.title("Blackjack AI Tutor")
+st.title("Blackjack AI Tutor - Mr.BJ")
 st.markdown("Learn Blackjack step-by-step.")
 if st.session_state.start:
     if st.button("Start!"):
