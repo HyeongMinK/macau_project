@@ -320,12 +320,11 @@ if st.session_state.start:
 if not st.session_state.start:
     b1, b2 = st.columns([1, 1])
     with b1:
-        st.markdown(step_texts[st.session_state.step])
-    with b2:
         if st.session_state.des:
             video_path = f"result_voice_{st.session_state.step}_step.mp4"  # 동영상 파일 경로
             st.video(video_path, autoplay=True)
-
+    with b2:
+        st.markdown(step_texts[st.session_state.step])
 
     if st.session_state.step != 5 or st.session_state.game_active and st.session_state.game_init:
         audio = mic_recorder(start_prompt=f"AI Chat", stop_prompt="Stop", format="webm", callback = state_recode)
