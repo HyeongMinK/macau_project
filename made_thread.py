@@ -310,9 +310,8 @@ def text_to_speech(client, text):
 # 이미지 경로 설정
 image_path = "bj.png"
 # Streamlit UI configuration
-b1, b2 = st.columns([2, 1],border=True)
-with b1:
-    st.title("Blackjack AI - Mr.BJ")
+st.title("Blackjack AI - Mr.BJ")
+b1,b2,b3 = st.columns([1,2,1])
 with b2:
     if st.session_state.des and not st.session_state.start:
             video_path = f"result_voice_{st.session_state.step}_step.mp4"  # 동영상 파일 경로
