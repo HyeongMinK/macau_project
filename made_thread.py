@@ -360,6 +360,7 @@ if not st.session_state.start:
                 Your browser does not support the video tag.
             </video>
         """
+        st.video(video_path, autoplay= True)
 
         st.markdown(video_html, unsafe_allow_html=True)  
         st.audio(f"{st.session_state.step}_step.mp3", format='audio/mp3', autoplay=True)
