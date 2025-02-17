@@ -318,7 +318,7 @@ if st.session_state.start:
         st.rerun()
 
 if not st.session_state.start:
-    b1, b2 = st.columns([1, 1])
+    b1, b2 = st.columns([1, 2])
     with b1:
         if st.session_state.des:
             video_path = f"result_voice_{st.session_state.step}_step.mp4"  # 동영상 파일 경로
