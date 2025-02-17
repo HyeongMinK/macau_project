@@ -226,7 +226,7 @@ Answer the user's question in relation to the current game.
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_input}
                 ],
-                max_tokens= 40
+                max_tokens= 30
             )
             answer = api_response.choices[0].message.content
         except Exception as e:
