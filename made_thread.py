@@ -323,6 +323,8 @@ if not st.session_state.start:
         if st.session_state.des:
             video_path = f"result_voice_{st.session_state.step}_step.mp4"  # 동영상 파일 경로
             st.video(video_path, autoplay=True)
+        else:
+            st.image("bj.png", caption="AI-powered Casino Dealer", use_column_width=True)
     with b2:
         st.markdown(step_texts[st.session_state.step])
 
