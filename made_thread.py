@@ -310,7 +310,16 @@ def text_to_speech(client, text):
 # 이미지 경로 설정
 image_path = "bj.png"
 # Streamlit UI configuration
-st.title("Blackjack AI Tutor - Mr.BJ")
+b1, b2 = st.columns([1, 5])
+with b1:
+    st.title("Blackjack AI Tutor - Mr.BJ")
+with b2:
+    if st.session_state.des:
+            video_path = f"result_voice_{st.session_state.step}_step.mp4"  # 동영상 파일 경로
+            st.video(video_path, autoplay=True)
+    else:
+        st.image("bj.png")
+        
 st.markdown("Learn Blackjack step-by-step.")
 if st.session_state.start:
     if st.button("Start!"):
@@ -318,15 +327,8 @@ if st.session_state.start:
         st.rerun()
 
 if not st.session_state.start:
-    b1, b2 = st.columns([1, 5])
-    with b1:
-        if st.session_state.des:
-            video_path = f"result_voice_{st.session_state.step}_step.mp4"  # 동영상 파일 경로
-            st.video(video_path, autoplay=True)
-        else:
-            st.image("bj.png")
-    with b2:
-        st.markdown(step_texts[st.session_state.step])
+
+    st.markdown(step_texts[st.session_state.step])
 
     if st.session_state.step != 5 or st.session_state.game_active and st.session_state.game_init:
         audio = mic_recorder(start_prompt=f"AI Chat", stop_prompt="Stop", format="webm", callback = state_recode)
