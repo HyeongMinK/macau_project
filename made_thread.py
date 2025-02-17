@@ -318,7 +318,13 @@ if st.session_state.start:
         st.rerun()
 
 if not st.session_state.start:
-    st.markdown(step_texts[st.session_state.step])
+    b1, b2 = st.columns([1, 1])
+    with b1:
+        st.markdown(step_texts[st.session_state.step])
+    with b2:
+        if st.session_state.des:
+            video_path = f"result_voice_{st.session_state.step}_step.mp4"  # 동영상 파일 경로
+            st.video(video_path, autoplay=True)
 
 
     if st.session_state.step != 5 or st.session_state.game_active and st.session_state.game_init:
@@ -351,19 +357,6 @@ if not st.session_state.start:
             st.session_state.tts_audio_data = False
             st.rerun()
 
-    if st.session_state.des:
-        video_path = f"result_voice_{st.session_state.step}_step.mp4"  # 동영상 파일 경로
-        # HTML 태그를 사용하여 자동 재생 및 반복 재생
-        video_html = f"""
-            <video autoplay muted width="100%">
-                <source src="{video_path}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        """
-        st.video(video_path, autoplay= True)
-
-        st.markdown(video_html, unsafe_allow_html=True)  
-        st.audio(f"{st.session_state.step}_step.mp3", format='audio/mp3', autoplay=True)
 
     if st.session_state.tts_audio_data:
         st.write(st.session_state.output)
