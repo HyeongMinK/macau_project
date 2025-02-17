@@ -314,7 +314,7 @@ b1, b2 = st.columns([4, 1])
 with b1:
     st.title("Blackjack AI Tutor - Mr.BJ")
 with b2:
-    if st.session_state.des:
+    if st.session_state.des and not st.session_state.start:
             video_path = f"result_voice_{st.session_state.step}_step.mp4"  # 동영상 파일 경로
             st.video(video_path, autoplay=True)
     else:
