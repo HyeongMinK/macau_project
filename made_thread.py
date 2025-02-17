@@ -310,7 +310,7 @@ def text_to_speech(client, text):
 # 이미지 경로 설정
 image_path = "bj.png"
 # Streamlit UI configuration
-b1, b2 = st.columns([5, 1])
+b1, b2 = st.columns([4, 1])
 with b1:
     st.title("Blackjack AI Tutor - Mr.BJ")
 with b2:
