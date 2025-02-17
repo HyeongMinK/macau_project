@@ -311,8 +311,6 @@ def text_to_speech(client, text):
 image_path = "bj.png"
 # Streamlit UI configuration
 st.title("Blackjack AI Tutor - Mr.BJ")
-# Streamlit에서 이미지 표시 (width 값 조정 가능)
-st.image(image_path, caption="AI-powered Casino Dealer", use_column_width=True)
 st.markdown("Learn Blackjack step-by-step.")
 if st.session_state.start:
     if st.button("Start!"):
