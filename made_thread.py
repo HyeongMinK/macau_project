@@ -351,7 +351,17 @@ if not st.session_state.start:
             st.session_state.tts_audio_data = False
             st.rerun()
 
-    if st.session_state.des:  
+    if st.session_state.des:
+        video_path = f"result_voice_{st.session_state.step}_step.mp4"  # 동영상 파일 경로
+        # HTML 태그를 사용하여 자동 재생 및 반복 재생
+        video_html = f"""
+            <video autoplay muted width="100%">
+                <source src="{video_path}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        """
+
+        st.markdown(video_html, unsafe_allow_html=True)  
         st.audio(f"{st.session_state.step}_step.mp3", format='audio/mp3', autoplay=True)
 
     if st.session_state.tts_audio_data:
@@ -359,7 +369,6 @@ if not st.session_state.start:
 
     if st.session_state.tts_audio_data:
         st.audio(st.session_state.tts_audio_data, format='audio/mp3', autoplay=True)
-        st.image(image_path, caption="AI-powered Casino Dealer", use_column_width=True)
 
 
     # If in Practice Mode and game is active, display the current card status in a nice layout
