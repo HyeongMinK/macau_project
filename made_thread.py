@@ -312,7 +312,7 @@ image_path = "bj.png"
 # Streamlit UI configuration
 b1, b2 = st.columns([3, 1])
 with b1:
-    st.subtitle("Blackjack AI - Mr.BJ")
+    st.title("Blackjack AI - Mr.BJ")
 with b2:
     if st.session_state.des and not st.session_state.start:
             video_path = f"result_voice_{st.session_state.step}_step.mp4"  # 동영상 파일 경로
