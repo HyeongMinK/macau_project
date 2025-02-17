@@ -359,6 +359,7 @@ if not st.session_state.start:
 
     if st.session_state.tts_audio_data:
         st.audio(st.session_state.tts_audio_data, format='audio/mp3', autoplay=True)
+        st.image(image_path, caption="AI-powered Casino Dealer", use_column_width=True)
 
 
     # If in Practice Mode and game is active, display the current card status in a nice layout
