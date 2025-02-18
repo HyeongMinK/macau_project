@@ -218,6 +218,7 @@ Current game state:
 - Your cards: {st.session_state.player_hand} (Score: {st.session_state.player_score})
 - Dealer's visible card: {st.session_state.dealer_hand[0]}
 Answer the user's question in relation to the current game.
+And give short answer.
 """
         try:
             api_response = client.chat.completions.create(
