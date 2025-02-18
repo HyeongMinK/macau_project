@@ -218,7 +218,6 @@ Current game state:
 - Your cards: {st.session_state.player_hand} (Score: {st.session_state.player_score})
 - Dealer's visible card: {st.session_state.dealer_hand[0]}
 Answer the user's question in relation to the current game.
-And give short answer.
 """
         try:
             api_response = client.chat.completions.create(
@@ -264,7 +263,8 @@ Answer the user's question in a way that relates to the current Blackjack lesson
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_input}
-            ]
+            ],
+            max_tokens= 20
         )
         ai_response = api_response.choices[0].message.content
     except Exception as e:
