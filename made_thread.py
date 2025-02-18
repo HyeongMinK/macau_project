@@ -226,7 +226,7 @@ Answer the user's question in relation to the current game.
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_input}
                 ],
-                max_tokens= 20
+                max_tokens= 30
             )
             answer = api_response.choices[0].message.content
         except Exception as e:
@@ -264,7 +264,7 @@ Answer the user's question in a way that relates to the current Blackjack lesson
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_input}
             ],
-            max_tokens= 20
+            max_tokens= 50
         )
         ai_response = api_response.choices[0].message.content
     except Exception as e:
